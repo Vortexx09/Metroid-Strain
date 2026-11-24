@@ -1,0 +1,24 @@
+# Preferencias locales y copias de seguridad de GameMaker
+*.local
+*.yy.bak
+*.yyp.bak
+*.resource_order.bak
+
+# Salidas generadas en la raíz del repositorio
+/build/
+/exports/
+
+# Archivos del sistema y del editor
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Configuración privada de este espacio de trabajo
+/.agents/
+/.codex/
+/.aws/
+/AGENTS.md
+.env
+.env.*
+!.env.example
