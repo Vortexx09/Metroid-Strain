@@ -10,6 +10,7 @@ vertical_speed = 0;
 vertical_remainder = 0;
 facing_right = true;
 spin_jump = false;
+spin_direction = 0;
 animation_state = "idle";
 hanging = false;
 climb_x = x;

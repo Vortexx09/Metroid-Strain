@@ -11,6 +11,12 @@
     {"name":"Normal","order":14,"path":"folders/Sprites/Player/Normal.yy",},
   ],
   "ResourceOrderSettings":[
+    {"name":"obj_test_ramp_40","order":3,"path":"objects/obj_test_ramp_40/obj_test_ramp_40.yy"},
+    {"name":"spr_test_ramp_40","order":2,"path":"sprites/spr_test_ramp_40/spr_test_ramp_40.yy"},
+    {"name":"obj_test_ramp_35","order":4,"path":"objects/obj_test_ramp_35/obj_test_ramp_35.yy"},
+    {"name":"spr_test_ramp_35","order":3,"path":"sprites/spr_test_ramp_35/spr_test_ramp_35.yy"},
+    {"name":"obj_test_ramp","order":2,"path":"objects/obj_test_ramp/obj_test_ramp.yy",},
+    {"name":"spr_test_ramp","order":1,"path":"sprites/spr_test_ramp/spr_test_ramp.yy",},
     {"name":"obj_test_solid","order":1,"path":"objects/obj_test_solid/obj_test_solid.yy",},
     {"name":"rm_basic_movement_test","order":1,"path":"rooms/rm_basic_movement_test/rm_basic_movement_test.yy",},
     {"name":"spr_samus_idle_r","order":1,"path":"sprites/spr_samus_idle_r/spr_samus_idle_r.yy",},

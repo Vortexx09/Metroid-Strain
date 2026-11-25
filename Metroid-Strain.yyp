@@ -29,6 +29,12 @@
   },
   "name":"Metroid-Strain",
   "resources":[
+    {"id":{"name":"obj_test_ramp_40","path":"objects/obj_test_ramp_40/obj_test_ramp_40.yy"}},
+    {"id":{"name":"spr_test_ramp_40","path":"sprites/spr_test_ramp_40/spr_test_ramp_40.yy"}},
+    {"id":{"name":"obj_test_ramp_35","path":"objects/obj_test_ramp_35/obj_test_ramp_35.yy"}},
+    {"id":{"name":"spr_test_ramp_35","path":"sprites/spr_test_ramp_35/spr_test_ramp_35.yy"}},
+    {"id":{"name":"obj_test_ramp","path":"objects/obj_test_ramp/obj_test_ramp.yy"}},
+    {"id":{"name":"spr_test_ramp","path":"sprites/spr_test_ramp/spr_test_ramp.yy"}},
     {"id":{"name":"obj_test_player","path":"objects/obj_test_player/obj_test_player.yy",},},
     {"id":{"name":"obj_test_solid","path":"objects/obj_test_solid/obj_test_solid.yy",},},
     {"id":{"name":"rm_basic_movement_test","path":"rooms/rm_basic_movement_test/rm_basic_movement_test.yy",},},
