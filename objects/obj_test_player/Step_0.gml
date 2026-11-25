@@ -5,6 +5,8 @@ var space_pressed = keyboard_check_pressed(vk_space);
 var jump_pressed = space_pressed || up_pressed;
 var input_direction = move_right - move_left;
 var horizontal_step = input_direction;
+shot_cooldown = max(0, shot_cooldown - 1);
+shoot_pose_steps = max(0, shoot_pose_steps - 1);
 
 if (hanging) {
     if (up_pressed) {
@@ -127,6 +129,7 @@ if (side_solid != noone && input_direction == horizontal_step && vertical_speed 
             spin_jump = false;
             wall_jump_steps = 0;
             hanging = true;
+            shoot_pose_steps = 0;
             animation_state = "hang";
             sprite_index = facing_right ? spr_samus_idlejump_r : spr_samus_idlejump_l;
             image_index = 1;
@@ -152,10 +155,40 @@ repeat (abs(vertical_pixels)) {
 var next_state;
 var next_sprite;
 var grounded = vertical_speed >= 0 && place_meeting(x, y + 1, terrain);
+
+if (shot_cooldown == 0 && keyboard_check(ord("Z"))) {
+    var aim_x = keyboard_check(ord("L")) - keyboard_check(ord("J"));
+    var aim_y = keyboard_check(ord("K")) - keyboard_check(ord("I"));
+    if (aim_x == 0 && aim_y == 0) {
+        aim_x = facing_right ? 1 : -1;
+    }
+
+    var shot_angle = point_direction(0, 0, aim_x, aim_y);
+    var beam_x = x + 16;
+    var beam_y = y + 12;
+    var muzzle_x = beam_x + lengthdir_x(14, shot_angle);
+    var muzzle_y = beam_y + lengthdir_y(14, shot_angle);
+    if (collision_line(beam_x, beam_y, muzzle_x, muzzle_y, terrain, true, true) == noone) {
+        instance_create_layer(muzzle_x, muzzle_y, layer, obj_test_beam, { direction: shot_angle });
+    }
+
+    shot_cooldown = shot_interval;
+    shoot_pose_steps = aim_y == 0 ? shot_interval : 0;
+    shoot_facing_right = aim_x > 0;
+}
+
 if (grounded) {
     spin_jump = false;
     wall_jump_steps = 0;
-    if (x != start_x) {
+    if (shoot_pose_steps > 0) {
+        if (x != start_x) {
+            next_state = "run_shoot";
+            next_sprite = shoot_facing_right ? spr_samus_runshoot_r : spr_samus_runshoot_l;
+        } else {
+            next_state = "idle_shoot";
+            next_sprite = shoot_facing_right ? spr_samus_idleshoot_r : spr_samus_idleshoot_l;
+        }
+    } else if (x != start_x) {
         next_state = "run";
         next_sprite = facing_right ? spr_samus_run_r : spr_samus_run_l;
     } else {
