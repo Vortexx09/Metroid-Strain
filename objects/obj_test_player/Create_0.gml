@@ -1,0 +1,17 @@
+move_speed = 4;
+jump_speed = 11;
+wall_jump_speed = 6;
+wall_jump_duration = 7;
+wall_jump_steps = 0;
+wall_jump_direction = 0;
+gravity_per_step = 0.55;
+terminal_speed = 12;
+vertical_speed = 0;
+vertical_remainder = 0;
+facing_right = true;
+spin_jump = false;
+spin_direction = 0;
+animation_state = "idle";
+hanging = false;
+climb_x = x;
+climb_y = y;
