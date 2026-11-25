@@ -49,6 +49,7 @@
     {"id":{"name":"rm_overworld","path":"rooms/rm_overworld/rm_overworld.yy",},},
     {"id":{"name":"player_animator","path":"scripts/player_animator/player_animator.yy",},},
     {"id":{"name":"player_movement","path":"scripts/player_movement/player_movement.yy",},},
+    {"id":{"name":"player_shooting","path":"scripts/player_shooting/player_shooting.yy",},},
     {"id":{"name":"spr_samus_idle_d_l","path":"sprites/spr_samus_idle_d_l/spr_samus_idle_d_l.yy",},},
     {"id":{"name":"spr_samus_idle_d_r","path":"sprites/spr_samus_idle_d_r/spr_samus_idle_d_r.yy",},},
     {"id":{"name":"spr_samus_idle_dd_l","path":"sprites/spr_samus_idle_dd_l/spr_samus_idle_dd_l.yy",},},
