@@ -16,12 +16,25 @@ Proyecto universitario de plataformas 2D y exploración, en desarrollo con GameM
 
 ## Abrir y ejecutar en el IDE
 
-La carpeta todavía no contiene un archivo `.yyp`. Para iniciar el proyecto, crea un juego nuevo en GameMaker con **GML Code** dentro de la carpeta del repositorio.
+1. En GameMaker, selecciona **File → Open Project** y abre [Metroid-Strain.yyp](Metroid-Strain.yyp).
+2. En el selector de destinos, elige **Windows → VM** o **Ubuntu → VM**, según tu sistema.
+3. Pulsa **F5** para abrir `rm_basic_movement_test`. Si falla la compilación, revisa el primer error en **Output**. [Manual del menú Build](https://manual.gamemaker.io/lts/en/IDE_Navigation/Menus/The_Build_Menu.htm)
 
-1. Cuando el proyecto esté en GitHub, clona el repositorio con la URL que aparece en su botón **Code** y entra en la carpeta clonada.
-2. En GameMaker, selecciona **File → Open Project** y abre el archivo `.yyp` del repositorio.
-3. En el selector de destinos, elige **Ubuntu → VM** y selecciona el equipo local si el IDE muestra el selector de dispositivos.
-4. Pulsa **F5** o el botón **Run**. La primera sala del orden de ejecución debe abrirse en una ventana. Si falla la compilación, revisa el primer error en **Output**. [Manual del menú Build](https://manual.gamemaker.io/lts/en/IDE_Navigation/Menus/The_Build_Menu.htm)
+## Controles de la sala de pruebas
+
+| Acción | Controles |
+| --- | --- |
+| Moverse | **← / →** o **A / D** |
+| Saltar | **Espacio**, **↑** o **W**. Saltar con dirección inicia una voltereta que conserva el impulso al soltar la tecla. |
+| Agarrarse a un borde | Mantén la dirección hacia la plataforma al caer junto al borde. |
+| Subir desde un borde | **↑** o **W** |
+| Saltar desde un borde | **Espacio** + dirección contraria al borde |
+| Saltar desde una pared | Pulsa **Espacio** mientras tocas una pared en el aire. |
+| Apuntar | **I / J / K / L** para arriba, izquierda, abajo y derecha. Combina una dirección vertical con una horizontal para apuntar en diagonal. |
+| Disparar | **Z**. Sin teclas de apuntado, dispara hacia donde mira el personaje. |
+| Cambiar de arma | **Q**, después de recoger el power-up naranja en la primera plataforma. |
+
+`rm_overworld` es la sala de previsualización de animaciones. Para iniciarla, ponla temporalmente primero en el orden de salas.
 
 ## Entregas del curso
 
