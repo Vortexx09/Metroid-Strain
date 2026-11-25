@@ -1,5 +1,6 @@
 {
   "FolderOrderSettings":[
+    {"name":"Misc","order":3,"path":"folders/Sprites/Misc.yy",},
     {"name":"Objects","order":2,"path":"folders/Objects.yy",},
     {"name":"Rooms","order":4,"path":"folders/Rooms.yy",},
     {"name":"Scripts","order":3,"path":"folders/Scripts.yy",},
@@ -10,6 +11,8 @@
     {"name":"Normal","order":14,"path":"folders/Sprites/Player/Normal.yy",},
   ],
   "ResourceOrderSettings":[
+    {"name":"rm_basic_movement_test","order":1,"path":"rooms/rm_basic_movement_test/rm_basic_movement_test.yy",},
+    {"name":"obj_test_solid","order":1,"path":"objects/obj_test_solid/obj_test_solid.yy",},
     {"name":"spr_samus_idle_r","order":1,"path":"sprites/spr_samus_idle_r/spr_samus_idle_r.yy",},
     {"name":"spr_samus_idlejump_l","order":2,"path":"sprites/spr_samus_idlejump_l/spr_samus_idlejump_l.yy",},
     {"name":"spr_samus_idlejump_r","order":3,"path":"sprites/spr_samus_idlejump_r/spr_samus_idlejump_r.yy",},
