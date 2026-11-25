@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"Normal",
-    "path":"folders/Sprites/Player/Normal.yy",
+    "name":"Shoot",
+    "path":"folders/Sprites/Player/Normal/Shoot.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
