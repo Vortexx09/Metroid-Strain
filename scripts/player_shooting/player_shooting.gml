@@ -5,7 +5,6 @@ function player_shooting_init() {
     missiles_unlocked = false;
     missile_selected = false;
     shoot_pose_steps = 0;
-    shoot_facing_right = true;
 }
 
 function player_shooting_step() {
@@ -24,14 +23,11 @@ function player_shooting_aim() {
     };
 }
 
-function player_shooting_fire(_terrain, _aim = undefined) {
+function player_shooting_fire(_terrain, _aim) {
     if (shot_cooldown > 0 || !keyboard_check(ord("Z"))) {
         return;
     }
 
-    if (is_undefined(_aim)) {
-        _aim = player_shooting_aim();
-    }
     var aim_x = _aim.x;
     var aim_y = _aim.y;
     if (aim_x == 0 && aim_y == 0) {
@@ -50,5 +46,4 @@ function player_shooting_fire(_terrain, _aim = undefined) {
 
     shot_cooldown = missile_selected ? missile_interval : shot_interval;
     shoot_pose_steps = aim_y == 0 ? shot_interval : 0;
-    shoot_facing_right = aim_x > 0;
 }

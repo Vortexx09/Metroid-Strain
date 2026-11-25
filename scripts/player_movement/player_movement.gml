@@ -31,10 +31,6 @@ function player_movement_step() {
             x = climb_x;
             y = climb_y;
             hanging = false;
-            animation_state = "idle";
-            sprite_index = facing_right ? spr_samus_idle_r : spr_samus_idle_l;
-            image_index = 0;
-            image_speed = 1;
             return undefined;
         }
 
@@ -147,10 +143,6 @@ function player_movement_step() {
                 spin_jump = false;
                 wall_jump_steps = 0;
                 hanging = true;
-                animation_state = "hang";
-                sprite_index = facing_right ? spr_samus_idlejump_r : spr_samus_idlejump_l;
-                image_index = 1;
-                image_speed = 0;
                 return undefined;
             }
         }

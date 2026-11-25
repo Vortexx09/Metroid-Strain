@@ -36,7 +36,6 @@
     {"id":{"name":"obj_player","path":"objects/obj_player/obj_player.yy",},},
     {"id":{"name":"obj_test_beam","path":"objects/obj_test_beam/obj_test_beam.yy",},},
     {"id":{"name":"obj_test_missile_pickup","path":"objects/obj_test_missile_pickup/obj_test_missile_pickup.yy",},},
-    {"id":{"name":"obj_test_player","path":"objects/obj_test_player/obj_test_player.yy",},},
     {"id":{"name":"obj_test_ramp_35","path":"objects/obj_test_ramp_35/obj_test_ramp_35.yy",},},
     {"id":{"name":"obj_test_ramp_40","path":"objects/obj_test_ramp_40/obj_test_ramp_40.yy",},},
     {"id":{"name":"obj_test_ramp","path":"objects/obj_test_ramp/obj_test_ramp.yy",},},

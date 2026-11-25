@@ -34,6 +34,9 @@ var movement = player_movement_step();
 if (is_undefined(movement)) {
     if (hanging) {
         shoot_pose_steps = 0;
+        animator.hang(!facing_right);
+    } else {
+        animator.update(facing_right ? 1 : -1, false, true, false, false);
     }
     exit;
 }

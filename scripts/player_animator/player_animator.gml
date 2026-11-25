@@ -67,6 +67,14 @@ function PlayerAnimator(_player) constructor {
         player.image_index = _frame;
     };
 
+    static hang = function(_facing_left) {
+        facing_left = _facing_left;
+        state = PlayerAnimationState.IdleJump;
+        idle_jump_frame = 1;
+        turn_time = 0;
+        play(sprites[state][facing_left ? 0 : 1], idle_jump_frame, true);
+    };
+
     static update = function(_direction, _moving, _grounded, _shooting, _jump_pressed,
         _idle_aim = PlayerIdleAim.Forward, _spin_jump = undefined) {
         var _previous_facing_left = facing_left;
