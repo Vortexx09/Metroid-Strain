@@ -1,16 +1,43 @@
 var move_left = keyboard_check(vk_left) || keyboard_check(ord("A"));
 var move_right = keyboard_check(vk_right) || keyboard_check(ord("D"));
-var jump_pressed = keyboard_check_pressed(vk_space)
-    || keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("W"));
-
+var up_pressed = keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("W"));
+var space_pressed = keyboard_check_pressed(vk_space);
+var jump_pressed = space_pressed || up_pressed;
 var horizontal_step = move_right - move_left;
+
+if (hanging) {
+    if (up_pressed) {
+        x = climb_x;
+        y = climb_y;
+        hanging = false;
+        animation_state = "idle";
+        sprite_index = facing_right ? spr_samus_idle_r : spr_samus_idle_l;
+        image_index = 0;
+        image_speed = 1;
+        exit;
+    }
+
+    var away_from_ledge = facing_right ? -1 : 1;
+    if (!space_pressed || horizontal_step != away_from_ledge) {
+        exit;
+    }
+
+    hanging = false;
+    vertical_speed = -jump_speed;
+    vertical_remainder = 0;
+    spin_jump = true;
+    jump_pressed = false;
+}
+
 if (horizontal_step != 0) {
     facing_right = horizontal_step > 0;
 }
 
 var start_x = x;
+var side_solid = noone;
 repeat (abs(horizontal_step) * move_speed) {
-    if (place_meeting(x + horizontal_step, y, obj_test_solid)) {
+    side_solid = instance_place(x + horizontal_step, y, obj_test_solid);
+    if (side_solid != noone) {
         break;
     }
     x += horizontal_step;
@@ -22,6 +49,43 @@ if (jump_pressed && place_meeting(x, y + 1, obj_test_solid)) {
     spin_jump = horizontal_step != 0;
 }
 vertical_speed = min(vertical_speed + gravity_per_step, terminal_speed);
+
+if (side_solid != noone && vertical_speed >= 0
+    && !place_meeting(x, y + 1, obj_test_solid)) {
+    // Use the same collision query as horizontal movement to find the wall.
+    var ledge_top = side_solid.bbox_top;
+    var ledge_offset = ledge_top - y;
+    if (ledge_offset >= -2 && ledge_offset <= 16) {
+        var hang_y = ledge_top - 8;
+        var stand_y = ledge_top - sprite_get_height(mask_index);
+        var mask_width = sprite_get_width(mask_index);
+        var stand_x = x + horizontal_step * mask_width;
+
+        // Check the climb route before allowing the grab.
+        var clear_path = true;
+        for (var check_y = hang_y; clear_path && check_y >= stand_y; check_y--) {
+            clear_path = !place_meeting(x, check_y, obj_test_solid);
+        }
+        for (var offset = 1; clear_path && offset <= mask_width; offset++) {
+            clear_path = !place_meeting(x + horizontal_step * offset, stand_y, obj_test_solid);
+        }
+
+        if (clear_path && place_meeting(stand_x, stand_y + 1, obj_test_solid)) {
+            y = hang_y;
+            climb_x = stand_x;
+            climb_y = stand_y;
+            vertical_speed = 0;
+            vertical_remainder = 0;
+            spin_jump = false;
+            hanging = true;
+            animation_state = "hang";
+            sprite_index = facing_right ? spr_samus_idlejump_r : spr_samus_idlejump_l;
+            image_index = 1;
+            image_speed = 0;
+            exit;
+        }
+    }
+}
 
 vertical_remainder += vertical_speed;
 var vertical_pixels = sign(vertical_remainder) * floor(abs(vertical_remainder));

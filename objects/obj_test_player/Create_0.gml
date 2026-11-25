@@ -7,3 +7,6 @@ vertical_remainder = 0;
 facing_right = true;
 spin_jump = false;
 animation_state = "idle";
+hanging = false;
+climb_x = x;
+climb_y = y;
