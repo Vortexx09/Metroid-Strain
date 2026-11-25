@@ -33,6 +33,7 @@
   },
   "name":"Metroid-Strain",
   "resources":[
+    {"id":{"name":"obj_test_target","path":"objects/obj_test_target/obj_test_target.yy",},},
     {"id":{"name":"obj_player","path":"objects/obj_player/obj_player.yy",},},
     {"id":{"name":"obj_test_beam","path":"objects/obj_test_beam/obj_test_beam.yy",},},
     {"id":{"name":"obj_test_missile_pickup","path":"objects/obj_test_missile_pickup/obj_test_missile_pickup.yy",},},

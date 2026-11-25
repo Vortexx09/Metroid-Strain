@@ -34,6 +34,8 @@ Proyecto universitario de plataformas 2D y exploración, en desarrollo con GameM
 | Disparar | **Z**. Sin teclas de apuntado, dispara hacia donde mira el personaje. |
 | Cambiar de arma | **Q**, después de recoger el power-up naranja en la primera plataforma. |
 
+El rayo hace **10** de daño y los misiles **24**. Al llegar al 100 % de calor, ambas armas disparan a la mitad de cadencia y hacen la mitad de daño. Suelta **Z** y deja que el calor baje al 35 % para recuperar el rendimiento normal. El blanco al extremo derecho muestra su vida y el daño del último impacto.
+
 `rm_overworld` es la sala de previsualización de animaciones. Para iniciarla, ponla temporalmente primero en el orden de salas.
 
 ## Entregas del curso
