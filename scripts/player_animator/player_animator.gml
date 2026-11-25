@@ -67,7 +67,16 @@ function PlayerAnimator(_player) constructor {
         player.image_index = _frame;
     };
 
-    static update = function(_direction, _moving, _grounded, _shooting, _jump_pressed, _idle_aim = PlayerIdleAim.Forward) {
+    static hang = function(_facing_left) {
+        facing_left = _facing_left;
+        state = PlayerAnimationState.IdleJump;
+        idle_jump_frame = 1;
+        turn_time = 0;
+        play(sprites[state][facing_left ? 0 : 1], idle_jump_frame, true);
+    };
+
+    static update = function(_direction, _moving, _grounded, _shooting, _jump_pressed,
+        _idle_aim = PlayerIdleAim.Forward, _spin_jump = undefined) {
         var _previous_facing_left = facing_left;
         var _previous_state = state;
         var _shoot_pressed = _shooting && !was_shooting;
@@ -89,13 +98,16 @@ function PlayerAnimator(_player) constructor {
         var _was_jumping = _previous_state == PlayerAnimationState.IdleJump
             || _previous_state == PlayerAnimationState.RunJump;
         if (!_grounded) {
-            if (!_was_jumping) {
+            if (!is_undefined(_spin_jump)) {
+                state = _spin_jump ? PlayerAnimationState.RunJump : PlayerAnimationState.IdleJump;
+            } else if (!_was_jumping) {
                 state = _moving ? PlayerAnimationState.RunJump : PlayerAnimationState.IdleJump;
             } else if (_previous_state == PlayerAnimationState.RunJump && (_shoot_pressed || _jump_pressed)) {
                 state = PlayerAnimationState.IdleJump;
             }
         } else if (_moving) {
-            state = (run_shoot_direction != 0 || _aim_up || _aim_down)
+            var _run_shooting = is_undefined(_spin_jump) ? run_shoot_direction != 0 : _shooting;
+            state = (_run_shooting || _aim_up || _aim_down)
                 ? PlayerAnimationState.RunShoot : PlayerAnimationState.Run;
         } else {
             state = _shooting ? PlayerAnimationState.IdleShoot : PlayerAnimationState.Idle;
