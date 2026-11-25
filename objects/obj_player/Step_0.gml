@@ -26,4 +26,35 @@ if (room == rm_overworld) {
     }
 
     animator.update(_direction, _move_input != 0, preview_jump_time == 0, _shooting, _jump_pressed, _idle_aim);
+    exit;
 }
+
+player_shooting_step();
+var movement = player_movement_step();
+if (is_undefined(movement)) {
+    if (hanging) {
+        shoot_pose_steps = 0;
+    }
+    exit;
+}
+
+var aim = player_shooting_aim();
+player_shooting_fire(movement.terrain, aim);
+if (movement.grounded) {
+    spin_jump = false;
+    wall_jump_steps = 0;
+}
+
+var aim_style = PlayerIdleAim.Forward;
+if (aim.y < 0) {
+    aim_style = aim.x == 0 ? PlayerIdleAim.Up : PlayerIdleAim.DiagonalUp;
+} else if (aim.y > 0) {
+    aim_style = aim.x == 0 ? PlayerIdleAim.Down : PlayerIdleAim.DiagonalDown;
+}
+
+var look_direction = facing_right ? 1 : -1;
+if (!spin_jump && aim.x != 0) {
+    look_direction = aim.x;
+}
+var shooting = keyboard_check(ord("Z")) || shoot_pose_steps > 0;
+animator.update(look_direction, movement.moving, movement.grounded, shooting, false, aim_style, spin_jump);

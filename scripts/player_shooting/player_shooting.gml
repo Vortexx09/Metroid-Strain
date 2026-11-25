@@ -17,13 +17,23 @@ function player_shooting_step() {
     }
 }
 
-function player_shooting_fire(_terrain) {
+function player_shooting_aim() {
+    return {
+        x: keyboard_check(ord("L")) - keyboard_check(ord("J")),
+        y: keyboard_check(ord("K")) - keyboard_check(ord("I"))
+    };
+}
+
+function player_shooting_fire(_terrain, _aim = undefined) {
     if (shot_cooldown > 0 || !keyboard_check(ord("Z"))) {
         return;
     }
 
-    var aim_x = keyboard_check(ord("L")) - keyboard_check(ord("J"));
-    var aim_y = keyboard_check(ord("K")) - keyboard_check(ord("I"));
+    if (is_undefined(_aim)) {
+        _aim = player_shooting_aim();
+    }
+    var aim_x = _aim.x;
+    var aim_y = _aim.y;
     if (aim_x == 0 && aim_y == 0) {
         aim_x = facing_right ? 1 : -1;
     }
