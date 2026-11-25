@@ -29,15 +29,39 @@ if (hanging) {
     jump_pressed = false;
 }
 
+if (jump_pressed && !place_meeting(x, y + 1, obj_test_solid)) {
+    var wall_side = facing_right ? 1 : -1;
+    if (!place_meeting(x + wall_side, y, obj_test_solid)) {
+        wall_side = -wall_side;
+    }
+
+    if (place_meeting(x + wall_side, y, obj_test_solid)) {
+        wall_jump_direction = -wall_side;
+        wall_jump_steps = wall_jump_duration;
+        vertical_speed = -jump_speed;
+        vertical_remainder = 0;
+        spin_jump = true;
+        jump_pressed = false;
+    }
+}
+
+var horizontal_speed = move_speed;
+if (wall_jump_steps > 0) {
+    horizontal_step = wall_jump_direction;
+    horizontal_speed = wall_jump_speed;
+    wall_jump_steps--;
+}
+
 if (horizontal_step != 0) {
     facing_right = horizontal_step > 0;
 }
 
 var start_x = x;
 var side_solid = noone;
-repeat (abs(horizontal_step) * move_speed) {
+repeat (abs(horizontal_step) * horizontal_speed) {
     side_solid = instance_place(x + horizontal_step, y, obj_test_solid);
     if (side_solid != noone) {
+        wall_jump_steps = 0;
         break;
     }
     x += horizontal_step;
@@ -77,6 +101,7 @@ if (side_solid != noone && vertical_speed >= 0
             vertical_speed = 0;
             vertical_remainder = 0;
             spin_jump = false;
+            wall_jump_steps = 0;
             hanging = true;
             animation_state = "hang";
             sprite_index = facing_right ? spr_samus_idlejump_r : spr_samus_idlejump_l;
@@ -105,6 +130,7 @@ var next_sprite;
 var grounded = vertical_speed >= 0 && place_meeting(x, y + 1, obj_test_solid);
 if (grounded) {
     spin_jump = false;
+    wall_jump_steps = 0;
     if (x != start_x) {
         next_state = "run";
         next_sprite = facing_right ? spr_samus_run_r : spr_samus_run_l;
