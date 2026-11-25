@@ -29,6 +29,8 @@
   },
   "name":"Metroid-Strain",
   "resources":[
+    {"id":{"name":"obj_test_missile_pickup","path":"objects/obj_test_missile_pickup/obj_test_missile_pickup.yy",},},
+    {"id":{"name":"obj_test_beam","path":"objects/obj_test_beam/obj_test_beam.yy",},},
     {"id":{"name":"obj_test_ramp_40","path":"objects/obj_test_ramp_40/obj_test_ramp_40.yy"}},
     {"id":{"name":"spr_test_ramp_40","path":"sprites/spr_test_ramp_40/spr_test_ramp_40.yy"}},
     {"id":{"name":"obj_test_ramp_35","path":"objects/obj_test_ramp_35/obj_test_ramp_35.yy"}},
