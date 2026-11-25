@@ -1,16 +1,5 @@
-move_speed = 4;
-jump_speed = 11;
-wall_jump_speed = 6;
-wall_jump_duration = 7;
-wall_jump_steps = 0;
-wall_jump_direction = 0;
-gravity_per_step = 0.55;
-terminal_speed = 12;
-vertical_speed = 0;
-vertical_remainder = 0;
-facing_right = true;
-spin_jump = false;
-spin_direction = 0;
+player_movement_init();
+
 shot_cooldown = 0;
 shot_interval = 10;
 missile_interval = 20;
@@ -19,6 +8,3 @@ missile_selected = false;
 shoot_pose_steps = 0;
 shoot_facing_right = true;
 animation_state = "idle";
-hanging = false;
-climb_x = x;
-climb_y = y;
