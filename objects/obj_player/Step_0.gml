@@ -32,6 +32,7 @@ if (room == rm_overworld) {
 player_shooting_step();
 var movement = player_movement_step();
 if (is_undefined(movement)) {
+    missile_charge_steps = 0;
     if (hanging) {
         shoot_pose_steps = 0;
         animator.hang(!facing_right);
@@ -59,5 +60,5 @@ var look_direction = facing_right ? 1 : -1;
 if (!spin_jump && aim.x != 0) {
     look_direction = aim.x;
 }
-var shooting = keyboard_check(ord("Z")) || shoot_pose_steps > 0;
+var shooting = (!missile_selected && keyboard_check(ord("Z"))) || shoot_pose_steps > 0;
 animator.update(look_direction, movement.moving, movement.grounded, shooting, false, aim_style, spin_jump);

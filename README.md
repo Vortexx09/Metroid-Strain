@@ -31,10 +31,11 @@ Proyecto universitario de plataformas 2D y exploración, en desarrollo con GameM
 | Saltar desde un borde | **Espacio** + dirección contraria al borde |
 | Saltar desde una pared | Pulsa **Espacio** mientras tocas una pared en el aire. |
 | Apuntar | **I / J / K / L** para arriba, izquierda, abajo y derecha. Combina una dirección vertical con una horizontal para apuntar en diagonal. |
-| Disparar | **Z**. Sin teclas de apuntado, dispara hacia donde mira el personaje. |
-| Cambiar de arma | **Q**, después de recoger el power-up naranja en la primera plataforma. |
+| Disparar el rayo | **Z**. Sin teclas de apuntado, dispara hacia donde mira el personaje. |
+| Disparar un misil | Pulsa y suelta **Z** con los misiles seleccionados. Mantén **Z** hasta que la carga llegue al 100 % para duplicar el daño al soltarla. Cada disparo gasta un misil. |
+| Cambiar de arma | **Q**, después de recoger un power-up naranja. Cada power-up suma **5 misiles**. Hay uno en cada una de las dos primeras plataformas. |
 
-El rayo hace **10** de daño y los misiles **24**. Al llegar al 100 % de calor, ambas armas disparan a la mitad de cadencia y hacen la mitad de daño. Suelta **Z** y deja que el calor baje al 35 % para recuperar el rendimiento normal. El blanco al extremo derecho muestra su vida y el daño del último impacto.
+El rayo hace **10** de daño, el misil normal **24** y el misil cargado **48**. Desde el 0 % de calor, el rayo llega al 100 % después de 12 disparos seguidos. Al sobrecalentarse, ambas armas disparan a la mitad de cadencia y hacen la mitad de daño. Suelta **Z** y deja que el calor baje al 35 % para recuperar el rendimiento normal. El blanco al extremo derecho muestra su vida y el daño del último impacto.
 
 `rm_overworld` es la sala de previsualización de animaciones. Para iniciarla, ponla temporalmente primero en el orden de salas.
 

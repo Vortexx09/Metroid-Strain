@@ -4,6 +4,9 @@ function player_shooting_init() {
     missile_interval = 20;
     missiles_unlocked = false;
     missile_selected = false;
+    missile_ammo = 0;
+    missile_charge_steps = 0;
+    missile_charge_duration = 45;
     shoot_pose_steps = 0;
     weapon_heat = 0;
     weapon_overheated = false;
@@ -23,6 +26,7 @@ function player_shooting_step() {
 
     if (missiles_unlocked && keyboard_check_pressed(ord("Q"))) {
         missile_selected = !missile_selected;
+        missile_charge_steps = 0;
     }
 }
 
@@ -34,7 +38,28 @@ function player_shooting_aim() {
 }
 
 function player_shooting_fire(_terrain, _aim) {
-    if (shot_cooldown > 0 || !keyboard_check(ord("Z"))) {
+    if (shot_cooldown > 0) {
+        return;
+    }
+
+    var fire_held = keyboard_check(ord("Z"));
+    var charged = false;
+    if (missile_selected) {
+        if (missile_ammo <= 0) {
+            return;
+        }
+        if (fire_held) {
+            missile_charge_steps = min(missile_charge_steps + 1, missile_charge_duration);
+            return;
+        }
+        if (missile_charge_steps == 0) {
+            return;
+        }
+
+        charged = missile_charge_steps == missile_charge_duration;
+        missile_charge_steps = 0;
+        missile_ammo--;
+    } else if (!fire_held) {
         return;
     }
 
@@ -48,17 +73,21 @@ function player_shooting_fire(_terrain, _aim) {
     var beam_x = x + 16;
     var beam_y = y + 12;
     var base_damage = missile_selected ? 24 : 10;
-    weapon_heat = min(100, weapon_heat + (missile_selected ? 26 : 18));
+    if (charged) {
+        base_damage *= 2;
+    }
+    weapon_heat = min(100, weapon_heat + (missile_selected ? 26 : 9));
     weapon_overheated = weapon_overheated || weapon_heat >= 100;
     heat_recovery_delay = 12;
     instance_create_layer(beam_x, beam_y, layer, obj_test_beam, {
         direction: shot_angle,
         is_missile: missile_selected,
+        is_charged: charged,
         shot_damage: weapon_overheated ? base_damage * 0.5 : base_damage,
         terrain: _terrain
     });
 
     var base_interval = missile_selected ? missile_interval : shot_interval;
     shot_cooldown = weapon_overheated ? base_interval * 2 : base_interval;
-    shoot_pose_steps = aim_y == 0 ? shot_interval : 0;
+    shoot_pose_steps = (missile_selected || aim_y == 0) ? shot_interval : 0;
 }
