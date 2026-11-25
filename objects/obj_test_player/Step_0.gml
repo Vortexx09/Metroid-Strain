@@ -8,6 +8,10 @@ var horizontal_step = input_direction;
 shot_cooldown = max(0, shot_cooldown - 1);
 shoot_pose_steps = max(0, shoot_pose_steps - 1);
 
+if (missiles_unlocked && keyboard_check_pressed(ord("Q"))) {
+    missile_selected = !missile_selected;
+}
+
 if (hanging) {
     if (up_pressed) {
         x = climb_x;
@@ -169,10 +173,11 @@ if (shot_cooldown == 0 && keyboard_check(ord("Z"))) {
     var muzzle_x = beam_x + lengthdir_x(14, shot_angle);
     var muzzle_y = beam_y + lengthdir_y(14, shot_angle);
     if (collision_line(beam_x, beam_y, muzzle_x, muzzle_y, terrain, true, true) == noone) {
-        instance_create_layer(muzzle_x, muzzle_y, layer, obj_test_beam, { direction: shot_angle });
+        instance_create_layer(muzzle_x, muzzle_y, layer, obj_test_beam,
+            { direction: shot_angle, is_missile: missile_selected });
     }
 
-    shot_cooldown = shot_interval;
+    shot_cooldown = missile_selected ? missile_interval : shot_interval;
     shoot_pose_steps = aim_y == 0 ? shot_interval : 0;
     shoot_facing_right = aim_x > 0;
 }
