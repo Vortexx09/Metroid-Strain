@@ -24,17 +24,17 @@ Proyecto universitario de plataformas 2D y exploración, en desarrollo con GameM
 
 | Acción | Controles |
 | --- | --- |
-| Moverse | **← / →** o **A / D** |
-| Saltar | **Espacio**, **↑** o **W**. Saltar con dirección inicia una voltereta que conserva el impulso al soltar la tecla. |
+| Moverse | **← / →**. Al invertir la dirección en suelo, el jugador gira en el sitio y arranca si mantienes la nueva flecha durante 100 ms. Al aterrizar, la velocidad vuelve a cero. Si mantienes la flecha, acelera de nuevo en el paso siguiente. |
+| Saltar | **Espacio** o **W**. Suelta la tecla durante el ascenso para hacer un salto más bajo. Saltar con dirección inicia una voltereta que conserva la velocidad horizontal al soltar la flecha. |
 | Agarrarse a un borde | Mantén la dirección hacia la plataforma al caer junto al borde. |
 | Subir desde un borde | **↑** o **W** |
 | Saltar desde un borde | **Espacio** + dirección contraria al borde |
 | Saltar desde una pared | Pulsa **Espacio** mientras tocas una pared en el aire. |
-| Apuntar | **I / J / K / L** para arriba, izquierda, abajo y derecha. Combina una dirección vertical con una horizontal para apuntar en diagonal. |
-| Disparar | **Z**. Sin teclas de apuntado, dispara hacia donde mira el personaje. |
+| Apuntar | **A / S** para las diagonales, **↑ / ↓** para arriba y abajo. Al correr, **↑ / ↓** también apuntan en diagonal. **J / L** orientan al jugador a izquierda y derecha, e **I / K** también permiten apuntar arriba y abajo. |
+| Disparar | Pulsa **Z** para disparar. Mientras corres, se mantiene la pose de disparo hasta que dejes de correr o cambies de dirección. Pulsar **Z** durante la voltereta pasa a un salto normal. Con el rayo seleccionado, mantén **Z** hasta que el HUD indique **Rayo cargado** y suéltala para lanzarlo. |
 | Cambiar de arma | **Q**, después de recoger el power-up naranja en la primera plataforma. |
 
-`rm_overworld` es la sala de previsualización de animaciones. Para iniciarla, ponla temporalmente primero en el orden de salas.
+`rm_overworld` también permite probar las animaciones con movimiento y disparo sobre un piso de prueba.
 
 ## Entregas del curso
 

@@ -11,3 +11,4 @@ if (beam_life <= 0
 
 x = next_x;
 y = next_y;
+beam_steps_travelled++;
