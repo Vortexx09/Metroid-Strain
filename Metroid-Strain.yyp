@@ -10,6 +10,8 @@
   },
   "defaultScriptType":0,
   "Folders":[
+    {"$GMFolder":"","%Name":"Sounds","folderPath":"folders/Sounds.yy","name":"Sounds","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Player","folderPath":"folders/Sounds/Player.yy","name":"Player","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Objects","folderPath":"folders/Objects.yy","name":"Objects","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Rooms","folderPath":"folders/Rooms.yy","name":"Rooms","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Scripts","folderPath":"folders/Scripts.yy","name":"Scripts","resourceType":"GMFolder","resourceVersion":"2.0",},
@@ -33,6 +35,14 @@
   },
   "name":"Metroid-Strain",
   "resources":[
+    {"id":{"name":"player_audio","path":"scripts/player_audio/player_audio.yy"}},
+    {"id":{"name":"snd_player_jump","path":"sounds/snd_player_jump/snd_player_jump.yy"}},
+    {"id":{"name":"snd_player_spin_jump","path":"sounds/snd_player_spin_jump/snd_player_spin_jump.yy"}},
+    {"id":{"name":"snd_player_wall_jump","path":"sounds/snd_player_wall_jump/snd_player_wall_jump.yy"}},
+    {"id":{"name":"snd_player_land","path":"sounds/snd_player_land/snd_player_land.yy"}},
+    {"id":{"name":"snd_player_hang","path":"sounds/snd_player_hang/snd_player_hang.yy"}},
+    {"id":{"name":"snd_player_climb","path":"sounds/snd_player_climb/snd_player_climb.yy"}},
+    {"id":{"name":"snd_player_footstep","path":"sounds/snd_player_footstep/snd_player_footstep.yy"}},
     {"id":{"name":"obj_test_target","path":"objects/obj_test_target/obj_test_target.yy",},},
     {"id":{"name":"obj_player","path":"objects/obj_player/obj_player.yy",},},
     {"id":{"name":"obj_test_beam","path":"objects/obj_test_beam/obj_test_beam.yy",},},

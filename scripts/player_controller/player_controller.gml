@@ -7,6 +7,7 @@ function player_controller_init() {
         mask_index = spr_test_square;
         player_movement_init();
         player_shooting_init();
+        player_audio_init();
     }
 }
 
@@ -52,6 +53,7 @@ function player_controller_step() {
         } else {
             animator.update(facing_right ? 1 : -1, false, true, false, false);
         }
+        player_audio_step(movement);
         return;
     }
 
@@ -75,4 +77,5 @@ function player_controller_step() {
     }
     var shooting = (!missile_selected && keyboard_check(ord("Z"))) || shoot_pose_steps > 0;
     animator.update(look_direction, movement.moving, movement.grounded, shooting, false, aim_style, spin_jump);
+    player_audio_step(movement);
 }
