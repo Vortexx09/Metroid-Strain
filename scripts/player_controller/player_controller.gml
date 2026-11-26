@@ -1,12 +1,14 @@
 function player_controller_init() {
     animator = new PlayerAnimator(id);
     animator.update(0, false, true, false, false);
+    weapon_audio_init();
     if (room == rm_overworld) {
         preview_jump_time = 0;
     } else {
         mask_index = spr_test_square;
         player_movement_init();
         player_shooting_init();
+        player_audio_init();
     }
 }
 
@@ -46,17 +48,20 @@ function player_controller_step() {
     var movement = player_movement_step();
     if (is_undefined(movement)) {
         missile_charge_steps = 0;
+        weapon_audio_charge_update(false);
         if (hanging) {
             shoot_pose_steps = 0;
             animator.hang(!facing_right);
         } else {
             animator.update(facing_right ? 1 : -1, false, true, false, false);
         }
+        player_audio_step(movement);
         return;
     }
 
     var aim = player_shooting_aim();
     player_shooting_fire(movement.terrain, aim);
+    weapon_audio_charge_update(missile_charge_steps >= 8);
     if (movement.grounded) {
         spin_jump = false;
         wall_jump_steps = 0;
@@ -75,4 +80,5 @@ function player_controller_step() {
     }
     var shooting = (!missile_selected && keyboard_check(ord("Z"))) || shoot_pose_steps > 0;
     animator.update(look_direction, movement.moving, movement.grounded, shooting, false, aim_style, spin_jump);
+    player_audio_step(movement);
 }

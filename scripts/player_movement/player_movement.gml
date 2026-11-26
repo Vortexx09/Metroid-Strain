@@ -1,3 +1,10 @@
+enum PlayerJumpKind {
+    None,
+    Upright,
+    Spin,
+    Wall
+}
+
 function player_movement_init() {
     move_speed = 4;
     jump_speed = 11;
@@ -25,6 +32,7 @@ function player_movement_step() {
     var jump_pressed = space_pressed || up_pressed;
     var input_direction = move_right - move_left;
     var horizontal_step = input_direction;
+    var jump_kind = PlayerJumpKind.None;
 
     if (hanging) {
         if (up_pressed) {
@@ -43,6 +51,7 @@ function player_movement_step() {
         vertical_speed = -jump_speed;
         vertical_remainder = 0;
         spin_jump = true;
+        jump_kind = PlayerJumpKind.Spin;
         jump_pressed = false;
     }
 
@@ -61,6 +70,7 @@ function player_movement_step() {
             vertical_speed = -jump_speed;
             vertical_remainder = 0;
             spin_jump = true;
+            jump_kind = PlayerJumpKind.Wall;
             jump_pressed = false;
         }
     }
@@ -111,6 +121,7 @@ function player_movement_step() {
         vertical_remainder = 0;
         spin_jump = horizontal_step != 0;
         spin_direction = horizontal_step;
+        jump_kind = spin_jump ? PlayerJumpKind.Spin : PlayerJumpKind.Upright;
     }
     vertical_speed = min(vertical_speed + gravity_per_step, terminal_speed);
 
@@ -164,6 +175,7 @@ function player_movement_step() {
     return {
         grounded: vertical_speed >= 0 && place_meeting(x, y + 1, terrain),
         moving: x != start_x,
+        jump_kind: jump_kind,
         terrain: terrain
     };
 }

@@ -27,6 +27,7 @@ function player_shooting_step() {
     if (missiles_unlocked && keyboard_check_pressed(ord("Q"))) {
         missile_selected = !missile_selected;
         missile_charge_steps = 0;
+        weapon_audio_switch();
     }
 }
 
@@ -86,6 +87,7 @@ function player_shooting_fire(_terrain, _aim) {
         shot_damage: weapon_overheated ? base_damage * 0.5 : base_damage,
         terrain: _terrain
     });
+    weapon_audio_fired(missile_selected, charged);
 
     var base_interval = missile_selected ? missile_interval : shot_interval;
     shot_cooldown = weapon_overheated ? base_interval * 2 : base_interval;
