@@ -1,6 +1,7 @@
 function player_controller_init() {
     animator = new PlayerAnimator(id);
     animator.update(0, false, true, false, false);
+    weapon_audio_init();
     if (room == rm_overworld) {
         preview_jump_time = 0;
     } else {
@@ -47,6 +48,7 @@ function player_controller_step() {
     var movement = player_movement_step();
     if (is_undefined(movement)) {
         missile_charge_steps = 0;
+        weapon_audio_charge_update(false);
         if (hanging) {
             shoot_pose_steps = 0;
             animator.hang(!facing_right);
@@ -59,6 +61,7 @@ function player_controller_step() {
 
     var aim = player_shooting_aim();
     player_shooting_fire(movement.terrain, aim);
+    weapon_audio_charge_update(missile_charge_steps >= 8);
     if (movement.grounded) {
         spin_jump = false;
         wall_jump_steps = 0;
