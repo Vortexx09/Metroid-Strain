@@ -65,7 +65,7 @@
     },
     "name":"spr_samus_idlejump_dd_r",
     "playback":1,
-    "playbackSpeed":5.0,
+    "playbackSpeed":30.0,
     "playbackSpeedType":0,
     "resourceType":"GMSequence",
     "resourceVersion":"2.0",

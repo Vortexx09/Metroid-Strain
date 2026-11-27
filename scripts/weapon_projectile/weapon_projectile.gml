@@ -3,6 +3,7 @@ function weapon_projectile_init() {
     beam_dx = lengthdir_x(1, direction);
     beam_dy = lengthdir_y(1, direction);
     beam_life = 60;
+    beam_steps_travelled = 0;
 }
 
 function weapon_projectile_step() {
@@ -37,14 +38,19 @@ function weapon_projectile_step() {
 
         x = next_x;
         y = next_y;
+        beam_steps_travelled++;
     }
 }
 
 function weapon_projectile_draw() {
     var previous_colour = draw_get_colour();
     draw_set_colour(is_charged ? c_yellow : (is_missile ? c_orange : c_aqua));
-    var trail_length = beam_speed * 0.6;
     var trail_width = is_charged ? 7 : (is_missile ? 5 : 3);
-    draw_line_width(x, y, x - beam_dx * trail_length, y - beam_dy * trail_length, trail_width);
+    if (beam_steps_travelled == 0) {
+        draw_circle(x, y, trail_width * 0.5, false);
+    } else {
+        var trail_length = min(beam_steps_travelled, beam_speed * (is_charged ? 1 : 0.6));
+        draw_line_width(x, y, x - beam_dx * trail_length, y - beam_dy * trail_length, trail_width);
+    }
     draw_set_colour(previous_colour);
 }

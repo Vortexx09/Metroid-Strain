@@ -18,26 +18,24 @@ Proyecto universitario de plataformas 2D y exploración, en desarrollo con GameM
 
 1. En GameMaker, selecciona **File → Open Project** y abre [Metroid-Strain.yyp](Metroid-Strain.yyp).
 2. En el selector de destinos, elige **Windows → VM** o **Ubuntu → VM**, según tu sistema.
-3. Pulsa **F5** para abrir `rm_basic_movement_test`. Si falla la compilación, revisa el primer error en **Output**. [Manual del menú Build](https://manual.gamemaker.io/lts/en/IDE_Navigation/Menus/The_Build_Menu.htm)
+3. Pulsa **F5** para abrir `rm_overworld`. Para probar el daño, los misiles y los blancos, coloca `rm_basic_movement_test` primero en el orden de salas. Si falla la compilación, revisa el primer error en **Output**. [Manual del menú Build](https://manual.gamemaker.io/lts/en/IDE_Navigation/Menus/The_Build_Menu.htm)
 
 ## Controles de la sala de pruebas
 
 | Acción | Controles |
 | --- | --- |
-| Moverse | **← / →** o **A / D** |
-| Saltar | **Espacio**, **↑** o **W**. Saltar con dirección inicia una voltereta que conserva el impulso al soltar la tecla. |
+| Moverse | **← / →**. Al invertir la dirección en suelo, el jugador gira en el sitio y arranca si mantienes la nueva flecha durante 100 ms. Al aterrizar, la velocidad vuelve a cero. Si mantienes la flecha, acelera de nuevo en el paso siguiente. |
+| Saltar | **Espacio** o **W**. Suelta la tecla durante el ascenso para hacer un salto más bajo. Saltar con dirección inicia una voltereta que conserva la velocidad horizontal al soltar la flecha. |
 | Agarrarse a un borde | Mantén la dirección hacia la plataforma al caer junto al borde. |
 | Subir desde un borde | **↑** o **W** |
 | Saltar desde un borde | **Espacio** + dirección contraria al borde |
 | Saltar desde una pared | Pulsa **Espacio** mientras tocas una pared en el aire. |
-| Apuntar | **I / J / K / L** para arriba, izquierda, abajo y derecha. Combina una dirección vertical con una horizontal para apuntar en diagonal. |
-| Disparar el rayo | **Z**. Sin teclas de apuntado, dispara hacia donde mira el personaje. |
-| Disparar un misil | Pulsa y suelta **Z** con los misiles seleccionados. Mantén **Z** hasta que la carga llegue al 100 % para duplicar el daño al soltarla. Cada disparo gasta un misil. |
-| Cambiar de arma | **Q**, después de recoger un power-up naranja. Cada power-up suma **5 misiles**. Hay uno en cada una de las dos primeras plataformas. |
+| Apuntar | **A / S** para las diagonales, **↑ / ↓** para arriba y abajo. Al correr, **↑ / ↓** también apuntan en diagonal. **J / L** orientan al jugador a izquierda y derecha, e **I / K** también permiten apuntar arriba y abajo. |
+| Disparar | Pulsa **Z** para disparar. Mientras corres, se mantiene la pose de disparo hasta que dejes de correr o cambies de dirección. Pulsar **Z** durante la voltereta pasa a un salto normal. Con el rayo seleccionado, mantén **Z** hasta que el HUD indique **Rayo cargado** y suéltala para lanzarlo. |
+| Disparar un misil | Con los misiles seleccionados, pulsa y suelta **Z**. Mantén **Z** hasta alcanzar el 100 % de carga antes de soltarla para duplicar el daño. Cada disparo consume un misil. |
+| Cambiar de arma | **Q**, después de recoger un power-up naranja. Cada power-up añade **5 misiles**. |
 
-El rayo hace **10** de daño, el misil normal **24** y el misil cargado **48**. Desde el 0 % de calor, el rayo llega al 100 % después de 12 disparos seguidos. Al sobrecalentarse, ambas armas disparan a la mitad de cadencia y hacen la mitad de daño. Suelta **Z** y deja que el calor baje al 35 % para recuperar el rendimiento normal. El blanco al extremo derecho muestra su vida y el daño del último impacto.
-
-`rm_overworld` es la sala de previsualización de animaciones. Para iniciarla, ponla temporalmente primero en el orden de salas.
+El rayo normal hace **10** de daño, el rayo cargado **30**, el misil normal **24** y el misil cargado **48**. Al sobrecalentarse, ambas armas hacen la mitad de daño y aumentan el tiempo entre disparos. Suelta **Z** hasta que el calor baje al **35 %** para recuperar el rendimiento normal.
 
 ## Entregas del curso
 

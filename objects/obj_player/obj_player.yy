@@ -37,6 +37,9 @@
     "name":"spr_samus_idle_r",
     "path":"sprites/spr_samus_idle_r/spr_samus_idle_r.yy",
   },
-  "spriteMaskId":null,
+  "spriteMaskId":{
+    "name":"spr_samus_idle_r",
+    "path":"sprites/spr_samus_idle_r/spr_samus_idle_r.yy",
+  },
   "visible":true,
 }

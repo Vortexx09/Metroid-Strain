@@ -22,7 +22,6 @@ function PlayerAnimator(_player) constructor {
     run_shoot_direction = 0;
     was_shooting = false;
     turn_time = 0;
-    idle_jump_frame = 1;
 
     // Las filas siguen el orden de PlayerAnimationState. Cada par es izquierda/derecha.
     static sprites = [
@@ -70,13 +69,13 @@ function PlayerAnimator(_player) constructor {
     static hang = function(_facing_left) {
         facing_left = _facing_left;
         state = PlayerAnimationState.IdleJump;
-        idle_jump_frame = 1;
         turn_time = 0;
-        play(sprites[state][facing_left ? 0 : 1], idle_jump_frame, true);
+        play(sprites[state][facing_left ? 0 : 1], 1, true);
     };
 
     static update = function(_direction, _moving, _grounded, _shooting, _jump_pressed,
-        _idle_aim = PlayerIdleAim.Forward, _spin_jump = undefined) {
+        _idle_aim = PlayerIdleAim.Forward, _spin_jump = undefined, _jump_progress = 0,
+        _fire_pressed = false, _firing_now = false) {
         var _previous_facing_left = facing_left;
         var _previous_state = state;
         var _shoot_pressed = _shooting && !was_shooting;
@@ -88,10 +87,10 @@ function PlayerAnimator(_player) constructor {
             facing_left = _direction < 0;
         }
 
-        if (!_moving || _direction != run_shoot_direction) {
+        if (!_grounded || !_moving || _direction != run_shoot_direction) {
             run_shoot_direction = 0;
         }
-        if (_grounded && _moving && _shoot_pressed) {
+        if (_grounded && _moving && (_fire_pressed || _shoot_pressed)) {
             run_shoot_direction = _direction;
         }
 
@@ -106,8 +105,7 @@ function PlayerAnimator(_player) constructor {
                 state = PlayerAnimationState.IdleJump;
             }
         } else if (_moving) {
-            var _run_shooting = is_undefined(_spin_jump) ? run_shoot_direction != 0 : _shooting;
-            state = (_run_shooting || _aim_up || _aim_down)
+            state = (run_shoot_direction != 0 || _aim_up || _aim_down)
                 ? PlayerAnimationState.RunShoot : PlayerAnimationState.Run;
         } else {
             state = _shooting ? PlayerAnimationState.IdleShoot : PlayerAnimationState.Idle;
@@ -138,21 +136,19 @@ function PlayerAnimator(_player) constructor {
         var _air_turn = _is_idle_jump && _previous_state == PlayerAnimationState.IdleJump;
 
         // Los giros activos terminan aunque cambie el input. El sprite final sigue la última dirección.
-        if (turn_time > 0 && (_ground_turn || _air_turn)) {
+        if (!_firing_now && turn_time > 0 && (_ground_turn || _air_turn)) {
             turn_time = max(0, turn_time - delta_time / 1000000);
-            if (turn_time == 0) {
-                if (_air_turn) {
-                    idle_jump_frame = 2;
-                    play(_sprite, min(idle_jump_frame, sprite_get_number(_sprite) - 1), true);
-                } else {
-                    play(_sprite, _is_idle ? 1 : 0, _is_idle);
-                }
+            if (turn_time > 0) {
+                return;
             }
-            return;
+            if (!_air_turn) {
+                play(_sprite, _is_idle ? 1 : 0, _is_idle);
+                return;
+            }
         }
         turn_time = 0;
 
-        if (_previous_facing_left != facing_left && (_ground_turn || _air_turn)) {
+        if (!_firing_now && _previous_facing_left != facing_left && (_ground_turn || _air_turn)) {
             turn_time = 0.05;
             if (_air_turn) {
                 play(_sprite, 0, true);
@@ -181,13 +177,15 @@ function PlayerAnimator(_player) constructor {
                 player.image_index = 1 + frac(_loop_progress) * _loop_length;
             }
         } else if (_is_idle_jump) {
-            // La fase del salto se conserva al cambiar de apuntado, incluso en sprites cortos.
-            if (_previous_state != PlayerAnimationState.IdleJump) {
-                idle_jump_frame = 1;
-            } else {
-                idle_jump_frame += sprite_get_speed(_sprite) * delta_time / 1000000;
+            // IdleJump reserva el 0 para el giro y el 8 para el futuro aterrizaje.
+            var _sprite_frames = sprite_get_number(_sprite);
+            var _phase_frame = 3;
+            if (_jump_progress < 0) {
+                _phase_frame = floor(lerp(1, 4, 1 + _jump_progress));
+            } else if (_jump_progress > 0) {
+                _phase_frame = min(7, floor(lerp(4, 8, _jump_progress)));
             }
-            var _frame = min(idle_jump_frame, sprite_get_number(_sprite) - 1);
+            var _frame = min(_phase_frame, _sprite_frames - 1);
             if (player.sprite_index != _sprite) {
                 play(_sprite, _frame, true);
             } else {
