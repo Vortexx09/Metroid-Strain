@@ -18,7 +18,7 @@ Proyecto universitario de plataformas 2D y exploración, en desarrollo con GameM
 
 1. En GameMaker, selecciona **File → Open Project** y abre [Metroid-Strain.yyp](Metroid-Strain.yyp).
 2. En el selector de destinos, elige **Windows → VM** o **Ubuntu → VM**, según tu sistema.
-3. Pulsa **F5** para abrir `rm_basic_movement_test`. Si falla la compilación, revisa el primer error en **Output**. [Manual del menú Build](https://manual.gamemaker.io/lts/en/IDE_Navigation/Menus/The_Build_Menu.htm)
+3. Pulsa **F5** para abrir `rm_overworld`. Para probar el daño, los misiles y los blancos, coloca `rm_basic_movement_test` primero en el orden de salas. Si falla la compilación, revisa el primer error en **Output**. [Manual del menú Build](https://manual.gamemaker.io/lts/en/IDE_Navigation/Menus/The_Build_Menu.htm)
 
 ## Controles de la sala de pruebas
 
@@ -32,9 +32,10 @@ Proyecto universitario de plataformas 2D y exploración, en desarrollo con GameM
 | Saltar desde una pared | Pulsa **Espacio** mientras tocas una pared en el aire. |
 | Apuntar | **A / S** para las diagonales, **↑ / ↓** para arriba y abajo. Al correr, **↑ / ↓** también apuntan en diagonal. **J / L** orientan al jugador a izquierda y derecha, e **I / K** también permiten apuntar arriba y abajo. |
 | Disparar | Pulsa **Z** para disparar. Mientras corres, se mantiene la pose de disparo hasta que dejes de correr o cambies de dirección. Pulsar **Z** durante la voltereta pasa a un salto normal. Con el rayo seleccionado, mantén **Z** hasta que el HUD indique **Rayo cargado** y suéltala para lanzarlo. |
-| Cambiar de arma | **Q**, después de recoger el power-up naranja en la primera plataforma. |
+| Disparar un misil | Con los misiles seleccionados, pulsa y suelta **Z**. Mantén **Z** hasta alcanzar el 100 % de carga antes de soltarla para duplicar el daño. Cada disparo consume un misil. |
+| Cambiar de arma | **Q**, después de recoger un power-up naranja. Cada power-up añade **5 misiles**. |
 
-`rm_overworld` también permite probar las animaciones con movimiento y disparo sobre un piso de prueba.
+El rayo normal hace **10** de daño, el rayo cargado **30**, el misil normal **24** y el misil cargado **48**. Al sobrecalentarse, ambas armas hacen la mitad de daño y aumentan el tiempo entre disparos. Suelta **Z** hasta que el calor baje al **35 %** para recuperar el rendimiento normal.
 
 ## Entregas del curso
 

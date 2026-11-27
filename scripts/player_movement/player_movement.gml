@@ -1,3 +1,10 @@
+enum PlayerJumpKind {
+    None,
+    Upright,
+    Spin,
+    Wall
+}
+
 function player_movement_init() {
     move_speed = 2.5;
     ground_startup_time = 0.06;
@@ -60,6 +67,7 @@ function player_movement_has_support(_terrain) {
 }
 
 function player_movement_step(_fire_pressed) {
+    var jump_kind = PlayerJumpKind.None;
     var move_left = keyboard_check(vk_left);
     var move_right = keyboard_check(vk_right);
     var up_pressed = keyboard_check_pressed(ord("W"));
@@ -90,6 +98,7 @@ function player_movement_step(_fire_pressed) {
         vertical_remainder = 0;
         apex_hold_steps = 0;
         spin_jump = true;
+        jump_kind = PlayerJumpKind.Spin;
         jump_pressed = false;
     }
 
@@ -122,6 +131,7 @@ function player_movement_step(_fire_pressed) {
             vertical_remainder = 0;
             apex_hold_steps = 0;
             spin_jump = true;
+            jump_kind = PlayerJumpKind.Wall;
             jump_pressed = false;
         }
     }
@@ -235,6 +245,7 @@ function player_movement_step(_fire_pressed) {
     if (jump_pressed && vertical_speed >= 0
         && (place_meeting(x, y + 1, terrain) || (following_ground && player_movement_has_support(terrain)))) {
         spin_jump = input_direction != 0;
+        jump_kind = spin_jump ? PlayerJumpKind.Spin : PlayerJumpKind.Upright;
         if (spin_jump) {
             // La voltereta tiene su propio impulso desde el despegue.
             horizontal_speed = input_direction * run_jump_move_speed;
@@ -341,6 +352,7 @@ function player_movement_step(_fire_pressed) {
     return {
         grounded: grounded,
         moving: !landed && (moved_horizontally || ground_run_started),
+        jump_kind: jump_kind,
         jump_progress: jump_progress,
         terrain: terrain
     };

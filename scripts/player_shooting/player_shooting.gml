@@ -4,20 +4,35 @@ function player_shooting_init() {
     missile_interval = 20;
     missiles_unlocked = false;
     missile_selected = false;
+    missile_ammo = 0;
+    missile_charge_steps = 0;
+    missile_charge_duration = 45;
     shoot_pose_steps = 0;
     shoot_pose_duration = 6;
     beam_charge_steps = 0;
     beam_charge_delay = 15;
     beam_charge_full = 65;
+    weapon_heat = 0;
+    weapon_overheated = false;
+    heat_recovery_delay = 0;
 }
 
 function player_shooting_step() {
     shot_cooldown = max(0, shot_cooldown - 1);
     shoot_pose_steps = max(0, shoot_pose_steps - 1);
+    heat_recovery_delay = max(0, heat_recovery_delay - 1);
+    if (!keyboard_check(ord("Z")) && heat_recovery_delay == 0) {
+        weapon_heat = max(0, weapon_heat - 2);
+        if (weapon_heat <= 35) {
+            weapon_overheated = false;
+        }
+    }
 
     if (missiles_unlocked && keyboard_check_pressed(ord("Q"))) {
         missile_selected = !missile_selected;
         beam_charge_steps = 0;
+        missile_charge_steps = 0;
+        weapon_audio_switch();
     }
 }
 
@@ -48,19 +63,36 @@ function player_shooting_aim(_running) {
 function player_shooting_prepare(_pressed) {
     var fire_key = ord("Z");
     var released = keyboard_check_released(fire_key);
+    var held = keyboard_check(fire_key);
     var releasing_charge = !missile_selected && released && beam_charge_steps > beam_charge_delay;
     var charged = releasing_charge && beam_charge_steps >= beam_charge_full;
-    if (!missile_selected && keyboard_check(fire_key)) {
+    var firing = _pressed || releasing_charge;
+    if (missile_selected) {
+        firing = released && missile_charge_steps > 0 && missile_ammo > 0;
+        charged = firing && missile_charge_steps >= missile_charge_duration;
+        if (held && missile_ammo > 0 && shot_cooldown == 0) {
+            missile_charge_steps = min(missile_charge_steps + 1, missile_charge_duration);
+        } else if (!held || missile_ammo == 0) {
+            missile_charge_steps = 0;
+        }
+    } else if (held) {
         beam_charge_steps = min(beam_charge_steps + 1, beam_charge_full);
     } else {
         beam_charge_steps = 0;
     }
-    if (shot_cooldown > 0 || (!_pressed && !releasing_charge)) {
+    if (shot_cooldown > 0 || !firing) {
         return undefined;
     }
 
     shoot_pose_steps = shoot_pose_duration;
-    shot_cooldown = missile_selected ? missile_interval : (releasing_charge ? 16 : shot_interval);
+    if (missile_selected) {
+        missile_ammo--;
+    }
+    weapon_heat = min(100, weapon_heat + (missile_selected ? 26 : 9));
+    weapon_overheated = weapon_overheated || weapon_heat >= 100;
+    heat_recovery_delay = 12;
+    var base_interval = missile_selected ? missile_interval : (releasing_charge ? 16 : shot_interval);
+    shot_cooldown = weapon_overheated ? base_interval * 2 : base_interval;
     return charged;
 }
 
@@ -81,10 +113,22 @@ function player_shooting_fire(_terrain, _aim, _charged) {
         muzzle_x = x - 16 + muzzle[0];
         muzzle_y = y - 16 + muzzle[1];
     }
-    if (collision_line(beam_x, beam_y, muzzle_x, muzzle_y, _terrain, true, true) == noone) {
-        instance_create_layer(muzzle_x, muzzle_y, layer, obj_test_beam,
-            { direction: shot_angle, is_missile: missile_selected, is_charged: _charged });
+    weapon_audio_fired(missile_selected, _charged);
+    if (collision_line(beam_x, beam_y, muzzle_x, muzzle_y, _terrain, true, true) != noone) {
+        weapon_audio_impact(missile_selected);
+        return;
     }
+    var base_damage = missile_selected ? 24 : 10;
+    if (_charged) {
+        base_damage *= missile_selected ? 2 : 3;
+    }
+    instance_create_layer(muzzle_x, muzzle_y, layer, obj_test_beam, {
+        direction: shot_angle,
+        is_missile: missile_selected,
+        is_charged: _charged,
+        shot_damage: weapon_overheated ? base_damage * 0.5 : base_damage,
+        terrain: _terrain
+    });
 }
 
 // Punta del cañón en píxeles desde la esquina superior izquierda del fotograma.
